@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Pagos</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <h1>Portal de Pagos</h1>
+    <h2>Detalle y saldos de su cuenta corriente</h2>
+    <p>Su deuda total es de $ <span id="saldo-deuda"></span></p>
+    <p>Su deuda vencida es de $ <span id="saldo-vencido"></span></p>
+    <p>Su deuda para la próxima semana es de $ <span id="proxima-semana"></span></p>
+    <h2>Facturas pendientes</h2>
+    <div id="container" class="container"></div>
+    <h2>Orden de Pago</h2>
+    <h3>Total seleccionado</h3>
+    <p>$ <span id="total-ordendepago"></span></p>
+    <button id="reiniciar-ordendepago">Reiniciar orden de pago</button>
+    <button id="realizar-pago">Realizar pago</button>
+    <script src="./js/main.js"></script>
+</body>
+</html>
