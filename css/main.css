@@ -1,0 +1,66 @@
+.container-saldos {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  max-width: 90%;
+  justify-content: space-around;
+}
+
+.saldos {
+  border: solid 1px rgb(0, 0, 0);
+  background-color: rgb(27, 27, 27);
+  color: white;
+  border-radius: 8px;
+  width: 300px;
+  gap: 50px;
+  margin: 5px;
+  padding: 1rem;
+}
+
+.encabezados {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-around;
+  border: solid 1px darkgoldenrod;
+  background-color: goldenrod;
+  border-radius: 8px;
+  gap: 30px;
+  margin: 5px;
+  max-width: 90%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 90%;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-around;
+  border: solid 1px darkgoldenrod;
+  background-color: goldenrod;
+  border-radius: 8px;
+  margin: 5px;
+  width: 100%;
+}
+
+.btn {
+  border-radius: 8px;
+  border: solid 1px rgb(170, 146, 87);
+  background-color: rgb(224, 197, 130);
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.btn:hover {
+  transform: scale(1.025);
+}
+
+/*# sourceMappingURL=main.css.map */

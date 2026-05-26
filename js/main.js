@@ -64,7 +64,7 @@ function resumenSaldos() {
 
     const saldoProximaSemana = facturasPendientes().reduce((total, factura) => {
         const fechaVencimiento = new Date(factura.vencimiento);
-        const diasParaVencimiento = (fechaVencimiento - fechaActual) / (1000 * 60 * 60 * 24);
+        const diasParaVencimiento = (fechaVencimiento - fechaActual) / (1000 * 60 * 60 * 24); // Conversión de milisegundos a segundos > minutos > horas > días
         if (diasParaVencimiento > 0 && diasParaVencimiento <= 7) total += factura.monto;
         return total;
     }, 0);

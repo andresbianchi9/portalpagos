@@ -4,15 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de Pagos</title>
-    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
     <h1>Portal de Pagos</h1>
     <h2>Detalle y saldos de su cuenta corriente</h2>
-    <p>Su deuda total es de $ <span id="saldo-deuda"></span></p>
-    <p>Su deuda vencida es de $ <span id="saldo-vencido"></span></p>
-    <p>Su deuda para la próxima semana es de $ <span id="proxima-semana"></span></p>
+    <div class="container-saldos">
+        <div class="saldos">
+            <p>Su deuda total es de</p>
+            <p>$ <span id="saldo-deuda"></span></p>
+        </div>
+        <div class="saldos">
+            <p>Su deuda vencida es de</p>
+            <p>$ <span id="saldo-vencido"></span></p>
+        </div>
+        <div class="saldos">
+            <p>Su deuda para la próxima semana es de</p>
+            <p>$ <span id="proxima-semana"></span></p>
+        </div>
+    </div>
     <h2>Facturas pendientes</h2>
+    <div class="encabezados">
+        <p>Nro de Factura</p>
+        <p>Vencimiento</p>
+        <p>Monto</p>
+        <p>Estado</p>
+        <p>Acciones</p>
+    </div>
     <div id="container" class="container"></div>
     <h2>Orden de Pago</h2>
     <h3>Total seleccionado</h3>
