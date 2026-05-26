@@ -35,11 +35,17 @@ const facturas = [
         vencimiento: "2026-05-25",
         estado: "pendiente",
     },
-        {
+    {
         nroFactura: 107,
         monto: 5000,
         vencimiento: "2026-05-25",
-        estado: "pagada",
+        estado: "pendiente",
+    },
+    {
+        nroFactura: 108,
+        monto: 15000,
+        vencimiento: "2026-06-02",
+        estado: "pendiente",
     },
 ];
 
