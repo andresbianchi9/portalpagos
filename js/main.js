@@ -1,55 +1,4 @@
-import Swal from "sweetalert2";
-
-// const facturas = [
-//     {
-//         nroFactura: 101,
-//         monto: 1000,
-//         vencimiento: "2026-07-01",
-//         estado: "pendiente",
-//     },
-//     {
-//         nroFactura: 102,
-//         monto: 2000,
-//         vencimiento: "2026-07-02",
-//         estado: "pendiente",
-//     },
-//     {
-//         nroFactura: 103,
-//         monto: 7800,
-//         vencimiento: "2026-08-01",
-//         estado: "pendiente",
-//     },
-//     {
-//         nroFactura: 104,
-//         monto: 3200,
-//         vencimiento: "2026-06-20",
-//         estado: "pendiente",
-//     },
-//     {
-//         nroFactura: 105,
-//         monto: 800,
-//         vencimiento: "2026-05-20",
-//         estado: "pendiente",
-//     },
-//     {
-//         nroFactura: 106,
-//         monto: 1500,
-//         vencimiento: "2026-05-25",
-//         estado: "pendiente",
-//     },
-//     {
-//         nroFactura: 107,
-//         monto: 5000,
-//         vencimiento: "2026-05-25",
-//         estado: "pendiente",
-//     },
-//     {
-//         nroFactura: 108,
-//         monto: 15000,
-//         vencimiento: "2026-06-02",
-//         estado: "pendiente",
-//     },
-// ];
+// import Swal from "sweetalert2";
 
 let facturas = [];
 let pagosRealizados = [];
@@ -281,7 +230,7 @@ function cargarHistorial() {
 
         pagosRealizados.forEach(pago => {
             const itemPago = document.createElement("li");
-            itemPago.innerText = `Pago realizado el ${pago.fecha} por un monto de $${pago.monto}`;
+            itemPago.innerText = `Pago realizado el ${pago.fecha} por un monto de $${pago.monto} mediante ${pago.metodoPago}`;
             listaPagos.appendChild(itemPago);
         });
 
