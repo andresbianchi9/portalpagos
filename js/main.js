@@ -1,54 +1,58 @@
-const facturas = [
-    {
-        nroFactura: 101,
-        monto: 1000,
-        vencimiento: "2026-07-01",
-        estado: "pendiente",
-    },
-    {
-        nroFactura: 102,
-        monto: 2000,
-        vencimiento: "2026-07-02",
-        estado: "pendiente",
-    },
-    {
-        nroFactura: 103,
-        monto: 7800,
-        vencimiento: "2026-08-01",
-        estado: "pendiente",
-    },
-    {
-        nroFactura: 104,
-        monto: 3200,
-        vencimiento: "2026-06-20",
-        estado: "pendiente",
-    },
-    {
-        nroFactura: 105,
-        monto: 800,
-        vencimiento: "2026-05-20",
-        estado: "pendiente",
-    },
-    {
-        nroFactura: 106,
-        monto: 1500,
-        vencimiento: "2026-05-25",
-        estado: "pendiente",
-    },
-    {
-        nroFactura: 107,
-        monto: 5000,
-        vencimiento: "2026-05-25",
-        estado: "pendiente",
-    },
-    {
-        nroFactura: 108,
-        monto: 15000,
-        vencimiento: "2026-06-02",
-        estado: "pendiente",
-    },
-];
+import Swal from "sweetalert2";
 
+// const facturas = [
+//     {
+//         nroFactura: 101,
+//         monto: 1000,
+//         vencimiento: "2026-07-01",
+//         estado: "pendiente",
+//     },
+//     {
+//         nroFactura: 102,
+//         monto: 2000,
+//         vencimiento: "2026-07-02",
+//         estado: "pendiente",
+//     },
+//     {
+//         nroFactura: 103,
+//         monto: 7800,
+//         vencimiento: "2026-08-01",
+//         estado: "pendiente",
+//     },
+//     {
+//         nroFactura: 104,
+//         monto: 3200,
+//         vencimiento: "2026-06-20",
+//         estado: "pendiente",
+//     },
+//     {
+//         nroFactura: 105,
+//         monto: 800,
+//         vencimiento: "2026-05-20",
+//         estado: "pendiente",
+//     },
+//     {
+//         nroFactura: 106,
+//         monto: 1500,
+//         vencimiento: "2026-05-25",
+//         estado: "pendiente",
+//     },
+//     {
+//         nroFactura: 107,
+//         monto: 5000,
+//         vencimiento: "2026-05-25",
+//         estado: "pendiente",
+//     },
+//     {
+//         nroFactura: 108,
+//         monto: 15000,
+//         vencimiento: "2026-06-02",
+//         estado: "pendiente",
+//     },
+// ];
+
+let facturas = [];
+let pagosRealizados = [];
 const container = document.getElementById("container");
 const btnPagar = document.getElementById("realizar-pago");
 const btnReiniciar = document.getElementById("reiniciar-ordendepago");
@@ -56,7 +60,11 @@ const btnReiniciar = document.getElementById("reiniciar-ordendepago");
 btnReiniciar.onclick = reiniciarOP;
 btnPagar.onclick = pagarFacturas;
 
-function resumenSaldos() {
+function facturasPendientes() {
+    return facturas.filter(factura => factura.estado === "pendiente");
+};
+
+function calcularSaldos() {
 
     const fechaActual = new Date();
 
@@ -74,6 +82,17 @@ function resumenSaldos() {
         if (diasParaVencimiento > 0 && diasParaVencimiento <= 7) total += factura.monto;
         return total;
     }, 0);
+
+    return {
+        saldoDeuda,
+        saldoVencido,
+        saldoProximaSemana
+    };
+};
+
+function cargarSaldos() {
+
+    const {saldoDeuda, saldoVencido, saldoProximaSemana} = calcularSaldos();
 
     document.getElementById("saldo-deuda").innerText = saldoDeuda;
     document.getElementById("saldo-vencido").innerText = saldoVencido;
@@ -100,7 +119,7 @@ function crearCard(elemento) {
     checkbox.type = "checkbox";
     checkbox.value = elemento.nroFactura;
     checkbox.className = "checkFactura";
-    checkbox.addEventListener("change", recalcularTotal);
+    checkbox.addEventListener("change", mostrarTotal);
 
     card.appendChild(nroFactura);
     card.appendChild(vencimiento);
@@ -117,7 +136,7 @@ function cargarFacturas() {
     facturasPendientes().forEach(el => crearCard(el));
 };
 
-function recalcularTotal() {
+function obtenerTotal() {
 
     let total = 0;
     
@@ -137,6 +156,12 @@ function recalcularTotal() {
 
     });
 
+    return total;
+};
+
+function mostrarTotal() {
+
+    const total = obtenerTotal();
     document.getElementById("total-ordendepago").innerText = total;
 };
 
@@ -160,7 +185,7 @@ function reiniciarOP() {
 
             });
 
-            recalcularTotal();
+            mostrarTotal();
 
             alert("La Orden de Pago se reinició correctamente");
 
@@ -174,11 +199,7 @@ function reiniciarOP() {
 
         alert("No hay facturas seleccionadas aún");
 
-    }
-};
-
-function facturasPendientes() {
-    return facturas.filter(factura => factura.estado === "pendiente");
+    };
 };
 
 function pagarFacturas() {
@@ -194,7 +215,30 @@ function pagarFacturas() {
         return;
     };
 
+    const metodoPago = prompt(
+        "Seleccioná método de pago:\n\n1 - Transferencia\n2 - Tarjeta de crédito\n3 - Mercado Pago"
+    );
+
+    let metodoSeleccionado = "";
+
+    if (metodoPago === "1") {
+        metodoSeleccionado = "Transferencia";
+    } else if (metodoPago === "2") {
+        metodoSeleccionado = "Tarjeta de crédito";
+    } else if (metodoPago === "3") {
+        metodoSeleccionado = "Mercado Pago";
+    } else {
+        alert("Método de pago inválido");
+        return;
+    }
+
     alert("Pago realizado con exitos!");
+
+    pagosRealizados.push({
+            fecha: new Date().toLocaleDateString(),
+            monto: obtenerTotal(),
+            metodoPago: metodoSeleccionado,
+        });
 
     checksSeleccionados.forEach(checkbox => {
 
@@ -204,20 +248,58 @@ function pagarFacturas() {
 
         if (factura) {
             factura.estado = "pagada";
-        }
-        
+        };
+
         checkbox.checked = false;
 
     });  
 
-    resumenSaldos();
-    recalcularTotal();
+    cargarSaldos();
+    mostrarTotal();
     cargarFacturas();
+    cargarHistorial();
+};
+
+function cargarHistorial() {
+    
+    document.getElementById("historial").innerHTML = "";
+    
+    const historial = document.getElementById("historial");
+
+    const titulo = document.createElement("h2");
+    titulo.innerText = "Historial de Pagos";
+
+    if (pagosRealizados.length === 0) {
+        const mensaje = document.createElement("p");
+        mensaje.innerText = "No se han realizado pagos aún.";
+        historial.appendChild(titulo);
+        historial.appendChild(mensaje);
+        return;
+    };
+
+    const listaPagos = document.createElement("ul");
+
+        pagosRealizados.forEach(pago => {
+            const itemPago = document.createElement("li");
+            itemPago.innerText = `Pago realizado el ${pago.fecha} por un monto de $${pago.monto}`;
+            listaPagos.appendChild(itemPago);
+        });
+
+    historial.appendChild(titulo);
+    historial.appendChild(listaPagos);
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    resumenSaldos();
-    cargarFacturas();
+
+    fetch("./facturas.json")
+        .then(respuesta => respuesta.json())
+        .then(data => {
+            facturas = data.facturas;
+
+            cargarSaldos();
+            cargarFacturas();
+            cargarHistorial();
+    });
 });
 
 
