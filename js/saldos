@@ -1,0 +1,48 @@
+function obtenerTotal() {
+
+    let total = 0;
+    
+    const checksSeleccionados = document.querySelectorAll(
+        ".checkFactura:checked"
+    );
+
+    checksSeleccionados.forEach(check => {
+
+        const nroFactura = Number(check.value);
+
+        const facturaSeleccionada = facturas.find(
+            factura => factura.nroFactura === nroFactura
+        );
+
+        total += facturaSeleccionada.monto;
+
+    });
+
+    return total;
+};
+
+function calcularSaldos() {
+
+    const fechaActual = new Date();
+
+    const saldoDeuda = facturasPendientes().reduce((total, factura) => total + factura.monto, 0);
+
+    const saldoVencido = facturasPendientes().reduce((total, factura) => {
+        const fechaVencimiento = new Date(factura.vencimiento);
+        if (fechaVencimiento < fechaActual) total += factura.monto;
+        return total;
+    }, 0);
+
+    const saldoProximaSemana = facturasPendientes().reduce((total, factura) => {
+        const fechaVencimiento = new Date(factura.vencimiento);
+        const diasParaVencimiento = (fechaVencimiento - fechaActual) / (1000 * 60 * 60 * 24); // Conversión de milisegundos a segundos > minutos > horas > días
+        if (diasParaVencimiento > 0 && diasParaVencimiento <= 7) total += factura.monto;
+        return total;
+    }, 0);
+
+    return {
+        saldoDeuda,
+        saldoVencido,
+        saldoProximaSemana
+    };
+};
