@@ -12,6 +12,11 @@ let facturas = [];
 let pagosRealizados = [];
 const hoy = new Date("2026-05-28"); // Variable global para la fecha actual, utilizada en cálculos de saldos. Por motivos de demo se deja fija en 28/5/26.
 
+const formatoMoneda = new Intl.NumberFormat('es-AR', {
+  style: 'currency',
+  currency: 'ARS'
+});
+
 btnHome.onclick = renderHome;
 btnOrdenPago.onclick = renderOrdenPago;
 btnHistorial.onclick =  renderHistorial;
@@ -30,15 +35,15 @@ function renderHome() {
         <div class="container-saldos">
         <div class="saldos">
             <p>Su deuda total es de</p>
-            <p>$ ${saldos.saldoDeuda}</p>
+            <p>${formatoMoneda.format(saldos.saldoDeuda)}</p>
         </div>
         <div class="saldos">
             <p>Su deuda vencida es de</p>
-            <p>$ ${saldos.saldoVencido}</p>
+            <p>${formatoMoneda.format(saldos.saldoVencido)}</p>
         </div>
         <div class="saldos">
             <p>Su deuda para la próxima semana es de</p>
-            <p>$ ${saldos.saldoProximaSemana}</p>
+            <p>${formatoMoneda.format(saldos.saldoProximaSemana)}</p>
         </div>
         </div>
     `;
@@ -62,7 +67,7 @@ function renderOrdenPago() {
         <div id="container" class="container"></div>
         <h2>Orden de Pago</h2>
         <h3>Total seleccionado</h3>
-        <p>$ <span id="total-ordendepago"></span></p>
+        <p id="total-ordendepago"></p>
         <button id="reiniciar-ordendepago">Reiniciar orden de pago</button>
         <button id="realizar-pago">Realizar pago</button>
     `;
@@ -76,6 +81,7 @@ function renderOrdenPago() {
     btnPagar.onclick = () => pagarFacturas(facturas);
 
     cargarFacturas(container);
+    mostrarTotal(facturas);
 }
 
 function renderHistorial() {
@@ -104,7 +110,7 @@ function crearCard(elemento, container) {
     vencimiento.innerText = `${elemento.vencimiento}`;
 
     const monto = document.createElement("p");
-    monto.innerText = `$ ${elemento.monto}`;
+    monto.innerText = `${formatoMoneda.format(elemento.monto)}`;
 
     const estado = document.createElement("p");
     estado.innerText = `${elemento.estado}`;
@@ -132,7 +138,7 @@ function cargarFacturas(container) {
 
 function mostrarTotal(facturas) {
 
-    document.getElementById("total-ordendepago").innerText = totalOrdenPago(facturas);
+    document.getElementById("total-ordendepago").innerText = formatoMoneda.format(totalOrdenPago(facturas));
 };
 
 function reiniciarOP(facturas) {
@@ -219,7 +225,7 @@ async function pagarFacturas(facturas) {
 
     pagosRealizados.push({
         fecha: hoy.toLocaleDateString("es-AR"),
-        monto: totalOrdenPago(facturas),
+        monto: formatoMoneda.format(totalOrdenPago(facturas)),
         metodo: metodoPago,
     });
 
@@ -261,11 +267,15 @@ function cargarHistorial(historial) {
 
         pagosRealizados.forEach(pago => {
             const itemPago = document.createElement("li");
-            itemPago.innerText = `Pago realizado el ${pago.fecha} por un monto de $${pago.monto} mediante ${pago.metodo}`;
+            itemPago.innerText = `Pago realizado el ${pago.fecha} por un monto de ${pago.monto} mediante ${pago.metodo}`;
             listaPagos.appendChild(itemPago);
         });
 
+    const mensaje = document.createElement("p");
+    mensaje.innerText = "*NOTA: la fecha siempre será 27-5-2026 por tratarse de una demo, pero en un entorno real se mostraría la fecha actual del pago.";
+    
     historial.appendChild(listaPagos);
+    historial.appendChild(mensaje);
 };
 
 document.addEventListener("DOMContentLoaded", () => {
