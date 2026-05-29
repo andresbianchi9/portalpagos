@@ -7,37 +7,15 @@
     <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-    <h1>Portal de Pagos</h1>
-    <h2>Detalle y saldos de su cuenta corriente</h2>
-    <div class="container-saldos">
-        <div class="saldos">
-            <p>Su deuda total es de</p>
-            <p>$ <span id="saldo-deuda"></span></p>
-        </div>
-        <div class="saldos">
-            <p>Su deuda vencida es de</p>
-            <p>$ <span id="saldo-vencido"></span></p>
-        </div>
-        <div class="saldos">
-            <p>Su deuda para la próxima semana es de</p>
-            <p>$ <span id="proxima-semana"></span></p>
-        </div>
-    </div>
-    <h2>Facturas pendientes</h2>
-    <div class="encabezados">
-        <p>Nro de Factura</p>
-        <p>Vencimiento</p>
-        <p>Monto</p>
-        <p>Estado</p>
-        <p>Acciones</p>
-    </div>
-    <div id="container" class="container"></div>
-    <h2>Orden de Pago</h2>
-    <h3>Total seleccionado</h3>
-    <p>$ <span id="total-ordendepago"></span></p>
-    <button id="reiniciar-ordendepago">Reiniciar orden de pago</button>
-    <button id="realizar-pago">Realizar pago</button>
-    <div id="historial"></div>
-    <script src="./js/main.js"></script>
+    <nav>
+        <button id="btnHome">Home</button>
+        <button id="btnOrdenPago">Pagar</button>
+        <button id="btnHistorial">Historial</button>
+    </nav>
+    <section id="vista-home" class="vista"></section>
+    <section id="vista-ordendepago" class="vista"></section>
+    <section id="vista-historial" class="vista"></section>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="./js/main.js"></script>
 </body>
 </html>

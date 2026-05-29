@@ -1,24 +1,141 @@
-import Swal from "sweetalert2";
+import { calcularSaldos, facturasPagadas, facturasPendientes, totalOrdenPago } from "./calculos.js";
+
+const btnHome = document.getElementById("btnHome");
+const btnOrdenPago = document.getElementById("btnOrdenPago");
+const btnHistorial = document.getElementById("btnHistorial");
+
+const vistaHome = document.getElementById("vista-home");
+const vistaOrdenPago = document.getElementById("vista-ordendepago");
+const vistaHistorial = document.getElementById("vista-historial");
 
 let facturas = [];
 let pagosRealizados = [];
 const hoy = new Date("2026-05-28"); // Variable global para la fecha actual, utilizada en cálculos de saldos. Por motivos de demo se deja fija en 28/5/26.
 
-function facturasPendientes() {
-    return facturas.filter(factura => factura.estado === "pendiente");
+btnHome.onclick = renderHome;
+btnOrdenPago.onclick = renderOrdenPago;
+btnHistorial.onclick =  renderHistorial;
+
+function renderHome() {
+
+    vistaHome.style.display = "block";
+    vistaOrdenPago.style.display = "none";
+    vistaHistorial.style.display = "none";
+
+    const saldos = calcularSaldos(hoy, facturas);
+
+    vistaHome.innerHTML = `
+        <h1>Portal de Pagos</h1>
+        <h2>Detalle y saldos de su cuenta corriente</h2>
+        <div class="container-saldos">
+        <div class="saldos">
+            <p>Su deuda total es de</p>
+            <p>$ ${saldos.saldoDeuda}</p>
+        </div>
+        <div class="saldos">
+            <p>Su deuda vencida es de</p>
+            <p>$ ${saldos.saldoVencido}</p>
+        </div>
+        <div class="saldos">
+            <p>Su deuda para la próxima semana es de</p>
+            <p>$ ${saldos.saldoProximaSemana}</p>
+        </div>
+        </div>
+    `;
+}
+
+function renderOrdenPago() {
+
+    vistaHome.style.display = "none";
+    vistaOrdenPago.style.display = "block";
+    vistaHistorial.style.display = "none";
+
+    vistaOrdenPago.innerHTML = `
+        <h2>Facturas pendientes</h2>
+        <div class="encabezados">
+            <p>Nro de Factura</p>
+            <p>Vencimiento</p>
+            <p>Monto</p>
+            <p>Estado</p>
+            <p>Acciones</p>
+        </div>
+        <div id="container" class="container"></div>
+        <h2>Orden de Pago</h2>
+        <h3>Total seleccionado</h3>
+        <p>$ <span id="total-ordendepago"></span></p>
+        <button id="reiniciar-ordendepago">Reiniciar orden de pago</button>
+        <button id="realizar-pago">Realizar pago</button>
+    `;
+
+    const container = document.getElementById("container");
+    const btnPagar = document.getElementById("realizar-pago");
+    const btnReiniciar = document.getElementById("reiniciar-ordendepago");
+    const totalOrdenPago = document.getElementById("total-ordendepago");
+
+    btnReiniciar.onclick = () => reiniciarOP(facturas);
+    btnPagar.onclick = () => pagarFacturas(facturas);
+
+    cargarFacturas(container);
+}
+
+function renderHistorial() {
+
+    vistaHome.style.display = "none";
+    vistaOrdenPago.style.display = "none";
+    vistaHistorial.style.display = "block";
+
+    vistaHistorial.innerHTML = `
+        <h2>Historial de Pagos</h2>
+        <div id="historial"></div>
+    `;
+
+    const historial = document.getElementById("historial");
+    cargarHistorial(historial);
+}
+
+function crearCard(elemento, container) {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const nroFactura = document.createElement("p");
+    nroFactura.innerText = `Factura: ${elemento.nroFactura}`;
+
+    const vencimiento = document.createElement("p");
+    vencimiento.innerText = `${elemento.vencimiento}`;
+
+    const monto = document.createElement("p");
+    monto.innerText = `$ ${elemento.monto}`;
+
+    const estado = document.createElement("p");
+    estado.innerText = `${elemento.estado}`;
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = elemento.nroFactura;
+    checkbox.className = "checkFactura";
+    checkbox.addEventListener("change", () => mostrarTotal(facturas));
+
+    card.appendChild(nroFactura);
+    card.appendChild(vencimiento);
+    card.appendChild(monto);
+    card.appendChild(estado);
+    card.appendChild(checkbox);
+
+    container.appendChild(card);
 };
 
-function facturasPagadas() {
-    return facturas.filter(factura => factura.estado === "pagada");
+function cargarFacturas(container) {
+
+    container.innerHTML = ""
+    facturasPendientes(facturas).forEach(el => crearCard(el, container));
 };
 
-const btnPagar = document.getElementById("realizar-pago");
-const btnReiniciar = document.getElementById("reiniciar-ordendepago");
+function mostrarTotal(facturas) {
 
-btnReiniciar.onclick = reiniciarOP;
-btnPagar.onclick = pagarFacturas;
+    document.getElementById("total-ordendepago").innerText = totalOrdenPago(facturas);
+};
 
-function reiniciarOP() {
+function reiniciarOP(facturas) {
 
     const checksSeleccionados = document.querySelectorAll(
         ".checkFactura:checked"
@@ -38,7 +155,7 @@ function reiniciarOP() {
 
             });
 
-            mostrarTotal();
+            mostrarTotal(facturas);
 
             alert("La Orden de Pago se reinició correctamente");
 
@@ -55,7 +172,7 @@ function reiniciarOP() {
     };
 };
 
-function pagarFacturas() {
+async function pagarFacturas(facturas) {
 
     const facturasSeleccionadas = document.querySelectorAll(
         ".checkFactura:checked"
@@ -72,23 +189,13 @@ function pagarFacturas() {
             return;
     };
 
-    registrarPago();
-
-    cargarSaldos();
-    mostrarTotal();
-    cargarFacturas();
-    cargarHistorial();
-};
-
-function registrarPago() {
-
     const { value: metodoPago } = await Swal.fire({
         title: "Seleccioná método de pago",
         input: "select",
         inputOptions: {
-            transferencia: "Transferencia",
-            tarjeta: "Tarjeta de crédito",
-            mercadoPago: "Mercado Pago"
+            "Transferencia": "Transferencia",
+            "Tarjeta de crédito": "Tarjeta de crédito",
+            "Mercado Pago": "Mercado Pago"
         },
         inputPlaceholder: "Elegí una opción",
         showCancelButton: true,
@@ -112,15 +219,16 @@ function registrarPago() {
 
     pagosRealizados.push({
         fecha: hoy.toLocaleDateString("es-AR"),
-        monto: obtenerTotal(),
+        monto: totalOrdenPago(facturas),
         metodo: metodoPago,
     });
 
-
+    console.log(pagosRealizados);
+    cambiarEstadoFacturas(facturasSeleccionadas)
 };
 
 function cambiarEstadoFacturas(facturasSeleccionadas) {
-
+        
         facturasSeleccionadas.forEach(checkbox => {
 
         const nroFacturaPagada = Number(checkbox.value);
@@ -133,7 +241,31 @@ function cambiarEstadoFacturas(facturasSeleccionadas) {
 
         checkbox.checked = false;
 
-    });  
+    });
+
+    renderOrdenPago();
+};
+
+function cargarHistorial(historial) {
+    
+    historial.innerHTML = "";
+
+    if (pagosRealizados.length === 0) {
+        const mensaje = document.createElement("p");
+        mensaje.innerText = "No se han realizado pagos aún.";
+        historial.appendChild(mensaje);
+        return;
+    };
+
+    const listaPagos = document.createElement("ul");
+
+        pagosRealizados.forEach(pago => {
+            const itemPago = document.createElement("li");
+            itemPago.innerText = `Pago realizado el ${pago.fecha} por un monto de $${pago.monto} mediante ${pago.metodo}`;
+            listaPagos.appendChild(itemPago);
+        });
+
+    historial.appendChild(listaPagos);
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -143,11 +275,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             facturas = data.facturas;
 
-            cargarSaldos();
-            cargarFacturas();
-            cargarHistorial();
+            renderHome();
     });
 });
-
-
-
