@@ -1,20 +1,64 @@
+body {
+  background-color: #f4eddb;
+  color: #ff7133;
+  font-family: "Noto Sans", sans-serif;
+  margin: 0;
+}
+
+nav {
+  background-color: #f4eddb;
+}
+
+#vista-home {
+  background-color: #1e4650;
+}
+
+h1 {
+  font-family: "Metal Mania", system-ui;
+  background-color: #f4eddb;
+  padding: 1rem;
+  margin: 0;
+}
+
+#vista-home h2 {
+  background-color: #ff7133;
+  color: #f4eddb;
+  padding: 1rem;
+  padding-left: 2rem;
+  margin: 0;
+}
+
 .container-saldos {
   display: flex;
   flex-direction: row;
   text-align: center;
-  max-width: 90%;
+  max-width: 100%;
   justify-content: space-around;
+  background-color: #1e4650;
+  padding: 2rem;
+  margin: 0;
 }
 
 .saldos {
-  border: solid 1px rgb(0, 0, 0);
-  background-color: rgb(27, 27, 27);
-  color: white;
+  background-color: #ff7133;
+  color: #f4eddb;
   border-radius: 8px;
-  width: 300px;
+  width: 250px;
   gap: 50px;
   margin: 5px;
+  padding: 0.5rem;
+}
+
+.saldos:hover {
+  font-weight: bolder;
+  color: #f4eddb;
+  transform: scale(1.045);
+  border: solid 2px #bfd5c8;
+}
+
+#vista-ordendepago {
   padding: 1rem;
+  background-color: #f4eddb;
 }
 
 .encabezados {
@@ -22,8 +66,10 @@
   flex-direction: row;
   align-content: center;
   justify-content: space-around;
-  border: solid 1px darkgoldenrod;
-  background-color: goldenrod;
+  border: solid 1px #f4eddb;
+  background-color: #1e4650;
+  color: #f4eddb;
+  font-weight: bolder;
   border-radius: 8px;
   gap: 30px;
   width: 100%;
@@ -40,25 +86,57 @@
   flex-direction: row;
   align-content: center;
   justify-content: space-around;
-  border: solid 1px darkgoldenrod;
-  background-color: goldenrod;
+  border: solid 1px #f4eddb;
+  background-color: #bfd5c8;
+  color: #1e4650;
   border-radius: 8px;
   margin: 5px;
 }
 
-.btn {
+.card:hover {
+  font-weight: bolder;
+  background-color: #ff7133;
+  color: #f4eddb;
+  transform: scale(1.045);
+}
+
+#btnHome, #btnOrdenPago, #btnHistorial, #reiniciar-ordendepago, #realizar-pago {
   border-radius: 8px;
-  border: solid 1px rgb(170, 146, 87);
-  background-color: rgb(224, 197, 130);
+  border: solid 1px #bfd5c8;
+  background-color: #1e4650;
+  color: #f4eddb;
   padding: 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
 }
 
-.btn:hover {
-  transform: scale(1.025);
+#btnHome:hover, #btnOrdenPago:hover, #btnHistorial:hover, #reiniciar-ordendepago:hover, #realizar-pago:hover {
+  transform: scale(1.045);
+}
+
+#vista-historial {
+  background-color: #f4eddb;
+  padding: 1rem;
+}
+
+#vista-historial p {
+  color: #bfd5c8;
+  font-style: italic;
+}
+
+ul {
+  list-style: none;
+  color: #f4eddb;
+}
+
+#historial {
+  background-color: #1e4650;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+h3, #total-ordendepago {
+  color: #1e4650;
+  padding-left: 1rem;
 }
 
 /*# sourceMappingURL=main.css.map */

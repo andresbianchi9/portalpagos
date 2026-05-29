@@ -1,28 +1,67 @@
 @use "variables" as*;
 
 body{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: $color-claro;
+    color: $color-alterno;
+    font-family: $fuente-textos;
+    margin: 0;
+}
+
+nav{
+    background-color: $color-claro;
+}
+
+#vista-home{
+    background-color: $color-intenso;
+}
+
+h1{
+    font-family: $fuente-header;
+    background-color: $color-claro;
+    padding: 1rem;
+    margin: 0;
+}
+
+#vista-home h2{
+    background-color: $color-alterno;
+    color: $color-claro;
+    padding: 1rem;
+    padding-left: 2rem;
+    margin: 0;
 }
 
 .container-saldos{
     display: flex;
     flex-direction: row;
     text-align: center;
-    max-width: 90%;
+    max-width: 100%;
     justify-content: space-around;
+    background-color: $color-intenso;
+    padding: 2rem;
+    margin: 0;
 }
 
 .saldos{
-    border: solid 1px rgb(0, 0, 0);
-    background-color: rgb(27, 27, 27);
-    color: white;
+    background-color: $color-alterno;
+    color: $color-claro;
     border-radius: 8px;
-    width: 300px;
+    width: 250px;
     gap: 50px;
     margin: 5px;
+    padding: 0.5rem;
+}
+
+.saldos:hover{
+    font-weight: bolder;
+    color: $color-claro;
+    transform: scale(1.045);
+    border: solid 2px $color-suave;
+}
+
+
+#vista-ordendepago{
     padding: 1rem;
+    background-color: $color-claro;
 }
 
 .encabezados {
@@ -30,11 +69,12 @@ body{
     flex-direction: row;
     align-content: center;
     justify-content:space-around;
-    border: solid 1px darkgoldenrod;
-    background-color: goldenrod;
+    border: solid 1px $color-claro;
+    background-color: $color-intenso;
+    color: $color-claro;
+    font-weight: bolder;
     border-radius: 8px;
     gap: 30px;
-    margin: 5px;
     width: 100%;
 }
 
@@ -49,23 +89,54 @@ body{
     flex-direction: row;
     align-content: center;
     justify-content:space-around;
-    border: solid 1px darkgoldenrod;
-    background-color: goldenrod;
+    border: solid 1px $color-claro;
+    background-color: $color-suave;
+    color: $color-intenso;
     border-radius: 8px;
     margin: 5px;
 }
 
-.btn{
+.card:hover{
+    font-weight: bolder;
+    background-color: $color-alterno;
+    color: $color-claro;
+    transform: scale(1.045);
+}
+
+#btnHome, #btnOrdenPago, #btnHistorial, #reiniciar-ordendepago, #realizar-pago{
     border-radius: 8px;
-    border: solid 1px rgb(170, 146, 87);
-    background-color: rgb(224, 197, 130);
+    border: solid 1px $color-suave;
+    background-color: $color-intenso;
+    color: $color-claro;
     padding: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
 }
 
-.btn:hover{
-    transform: scale(1.025);
+#btnHome:hover, #btnOrdenPago:hover, #btnHistorial:hover, #reiniciar-ordendepago:hover, #realizar-pago:hover{
+    transform: scale(1.045);
+}
+
+#vista-historial{
+    background-color: $color-claro;
+    padding: 1rem;
+}
+
+#vista-historial p{
+    color: $color-suave;
+    font-style:italic;
+}
+
+ul{
+    list-style: none;
+    color: $color-claro;
+}
+#historial{
+    background-color: $color-intenso;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+h3, #total-ordendepago{
+    color: $color-intenso;
+    padding-left: 1rem;
 }
