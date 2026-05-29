@@ -1,4 +1,4 @@
-import { calcularSaldos, facturasPagadas, facturasPendientes, totalOrdenPago } from "./calculos.js";
+import { calcularSaldos, facturasPendientes, totalOrdenPago } from "./calculos.js";
 
 const btnHome = document.getElementById("btnHome");
 const btnOrdenPago = document.getElementById("btnOrdenPago");
@@ -162,7 +162,7 @@ function reiniciarOP(facturas) {
 
             });
 
-            mostrarTotal(facturas);
+            renderizarTotalOP(facturas);
 
             alert("La Orden de Pago se reinició correctamente");
 

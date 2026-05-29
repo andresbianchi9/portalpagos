@@ -2,10 +2,6 @@ export function facturasPendientes(facturas) {
     return facturas.filter(factura => factura.estado === "pendiente");
 };
 
-export function facturasPagadas(facturas) {
-    return facturas.filter(factura => factura.estado === "pagada");
-};
-
 export function calcularSaldos(hoy, facturas) {
 
     const saldoDeuda = facturasPendientes(facturas).reduce((total, factura) => total + factura.monto, 0);
