@@ -11,6 +11,7 @@ const vistaHistorial = document.getElementById("vista-historial");
 let facturas = [];
 let pagosRealizados = [];
 const hoy = new Date("2026-05-28"); // Variable global para la fecha actual, utilizada en cálculos de saldos. Por motivos de demo se deja fija en 28/5/26.
+// Al usuario se mostrará 27/5/26 por transformación de formato a es-AR".
 
 const formatoMoneda = new Intl.NumberFormat('es-AR', {
   style: 'currency',
@@ -80,8 +81,8 @@ function renderOrdenPago() {
     btnReiniciar.onclick = () => reiniciarOP(facturas);
     btnPagar.onclick = () => pagarFacturas(facturas);
 
-    cargarFacturas(container);
-    mostrarTotal(facturas);
+    renderizarListadoFacturas(container);
+    renderizarTotalOP(facturas);
 }
 
 function renderHistorial() {
@@ -96,7 +97,7 @@ function renderHistorial() {
     `;
 
     const historial = document.getElementById("historial");
-    cargarHistorial(historial);
+    renderizarHistorial(historial);
 }
 
 function crearCard(elemento, container) {
@@ -119,7 +120,7 @@ function crearCard(elemento, container) {
     checkbox.type = "checkbox";
     checkbox.value = elemento.nroFactura;
     checkbox.className = "checkFactura";
-    checkbox.addEventListener("change", () => mostrarTotal(facturas));
+    checkbox.addEventListener("change", () => renderizarTotalOP(facturas));
 
     card.appendChild(nroFactura);
     card.appendChild(vencimiento);
@@ -130,13 +131,13 @@ function crearCard(elemento, container) {
     container.appendChild(card);
 };
 
-function cargarFacturas(container) {
+function renderizarListadoFacturas(container) {
 
     container.innerHTML = ""
     facturasPendientes(facturas).forEach(el => crearCard(el, container));
 };
 
-function mostrarTotal(facturas) {
+function renderizarTotalOP(facturas) {
 
     document.getElementById("total-ordendepago").innerText = formatoMoneda.format(totalOrdenPago(facturas));
 };
@@ -252,7 +253,7 @@ function cambiarEstadoFacturas(facturasSeleccionadas) {
     renderOrdenPago();
 };
 
-function cargarHistorial(historial) {
+function renderizarHistorial(historial) {
     
     historial.innerHTML = "";
 
