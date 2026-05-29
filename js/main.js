@@ -172,79 +172,79 @@ function reiniciarOP(facturas) {
     };
 };
 
-// async function pagarFacturas(facturas) {
+async function pagarFacturas(facturas) {
 
-//     const facturasSeleccionadas = document.querySelectorAll(
-//         ".checkFactura:checked"
-//     );
+    const facturasSeleccionadas = document.querySelectorAll(
+        ".checkFactura:checked"
+    );
 
-//     if (facturasSeleccionadas.length === 0) {
+    if (facturasSeleccionadas.length === 0) {
 
-//     Swal.fire({
-//                 icon: "warning",
-//                 title: "Oops...",
-//                 text: "Seleccioná al menos una factura"
-//             });
+    Swal.fire({
+                icon: "warning",
+                title: "Oops...",
+                text: "Seleccioná al menos una factura"
+            });
 
-//             return;
-//     };
+            return;
+    };
 
-//     const { value: metodoPago } = await Swal.fire({
-//         title: "Seleccioná método de pago",
-//         input: "select",
-//         inputOptions: {
-//             "Transferencia": "Transferencia",
-//             "Tarjeta de crédito": "Tarjeta de crédito",
-//             "Mercado Pago": "Mercado Pago"
-//         },
-//         inputPlaceholder: "Elegí una opción",
-//         showCancelButton: true,
-//         confirmButtonText: "Pagar",
-//         cancelButtonText: "Cancelar",
-//         inputValidator: (value) => {
-//             if (!value) {
-//                 return "Tenés que seleccionar un método";
-//             }
-//         }
-//     });
+    const { value: metodoPago } = await Swal.fire({
+        title: "Seleccioná método de pago",
+        input: "select",
+        inputOptions: {
+            "Transferencia": "Transferencia",
+            "Tarjeta de crédito": "Tarjeta de crédito",
+            "Mercado Pago": "Mercado Pago"
+        },
+        inputPlaceholder: "Elegí una opción",
+        showCancelButton: true,
+        confirmButtonText: "Pagar",
+        cancelButtonText: "Cancelar",
+        inputValidator: (value) => {
+            if (!value) {
+                return "Tenés que seleccionar un método";
+            }
+        }
+    });
 
-//     if (!metodoPago) {
-//         return;
-//     }
+    if (!metodoPago) {
+        return;
+    }
 
-//     Swal.fire({
-//         icon: "success",
-//         title: "Pago realizado con éxito"
-//     });
+    Swal.fire({
+        icon: "success",
+        title: "Pago realizado con éxito"
+    });
 
-//     pagosRealizados.push({
-//         fecha: hoy.toLocaleDateString("es-AR"),
-//         monto: totalOrdenPago(facturas),
-//         metodo: metodoPago,
-//     });
+    pagosRealizados.push({
+        fecha: hoy.toLocaleDateString("es-AR"),
+        monto: totalOrdenPago(facturas),
+        metodo: metodoPago,
+    });
 
-//     console.log(pagosRealizados);
-//     cambiarEstadoFacturas(facturasSeleccionadas)
-//};
+    console.log(pagosRealizados);
+    cambiarEstadoFacturas(facturasSeleccionadas)
+};
 
-// function cambiarEstadoFacturas(facturasSeleccionadas) {
+function cambiarEstadoFacturas(facturasSeleccionadas) {
         
-//         facturasSeleccionadas.forEach(checkbox => {
+        facturasSeleccionadas.forEach(checkbox => {
 
-//         const nroFacturaPagada = Number(checkbox.value);
+        const nroFacturaPagada = Number(checkbox.value);
 
-//         const factura = facturas.find(factura => factura.nroFactura === nroFacturaPagada);
+        const factura = facturas.find(factura => factura.nroFactura === nroFacturaPagada);
 
-//         if (factura) {
-//             factura.estado = "pagada";
-//         };
+        if (factura) {
+            factura.estado = "pagada";
+        };
 
-//         checkbox.checked = false;
+        checkbox.checked = false;
 
-//     });
+    });
 
-//     renderOrdenPago();
-// };
+    renderOrdenPago();
+};
 
 function cargarHistorial(historial) {
     
