@@ -29,12 +29,10 @@ export function calcularSaldos(hoy, facturas) {
 export function totalOrdenPago(facturas) {
 
     let total = 0;
-    
-    const checksSeleccionados = document.querySelectorAll(
-        ".checkFactura:checked"
-    );
 
-    checksSeleccionados.forEach(check => {
+    const facturasSeleccionadas = document.querySelectorAll(".checkFactura:checked");
+    
+    facturasSeleccionadas.forEach(check => {
 
         const nroFactura = Number(check.value);
 

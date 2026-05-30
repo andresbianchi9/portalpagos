@@ -20,7 +20,7 @@ const formatoMoneda = new Intl.NumberFormat('es-AR', {
 
 btnHome.onclick = renderHome;
 btnOrdenPago.onclick = renderOrdenPago;
-btnHistorial.onclick =  renderHistorial;
+btnHistorial.onclick = renderHistorial;
 
 function renderHome() {
 
@@ -148,11 +148,9 @@ function renderizarTotalOP(facturas) {
 
 function reiniciarOP(facturas) {
 
-    const checksSeleccionados = document.querySelectorAll(
-        ".checkFactura:checked"
-    );
+    const facturasSeleccionadas = document.querySelectorAll(".checkFactura:checked");
 
-    if (checksSeleccionados.length > 0) {
+    if (facturasSeleccionadas.length > 0) {
 
         Swal.fire({
             title: "Confirme para avanzar:",
@@ -162,23 +160,22 @@ function reiniciarOP(facturas) {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Sí, continuar."
-            }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-                checksSeleccionados.forEach(check => {
+                facturasSeleccionadas.forEach(check => {
 
                     check.checked = false;
                 });
+                renderizarTotalOP(facturas);
 
-                    renderizarTotalOP(facturas);
-            
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "La Orden de Pago se reinició correctamented",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "La Orden de Pago se reinició correctamented",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            };
         });
         
     } else {
@@ -190,9 +187,7 @@ function reiniciarOP(facturas) {
 
 async function pagarFacturas(facturas) {
 
-    const facturasSeleccionadas = document.querySelectorAll(
-        ".checkFactura:checked"
-    );
+    const facturasSeleccionadas = document.querySelectorAll(".checkFactura:checked");
 
     if (facturasSeleccionadas.length === 0) {
 
@@ -228,10 +223,12 @@ async function pagarFacturas(facturas) {
         return;
     }
 
-    Swal.fire({
-        icon: "success",
-        title: "Pago realizado con éxito"
-    });
+    simularCarga(() => {
+        Swal.fire({
+            icon: "success",
+            title: "Pago realizado con éxito"
+        });
+    }, "Procesando pago...");
 
     pagosRealizados.push({
         fecha: hoy.toLocaleDateString("es-AR"),
@@ -239,7 +236,6 @@ async function pagarFacturas(facturas) {
         metodo: metodoPago,
     });
 
-    console.log(pagosRealizados);
     cambiarEstadoFacturas(facturasSeleccionadas)
 };
 
@@ -288,6 +284,19 @@ function renderizarHistorial(historial) {
     historial.appendChild(mensaje);
 };
 
+function simularCarga(callback, mensajeLoader) {
+    Swal.fire({
+        title: mensajeLoader,
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading()
+    });
+
+    setTimeout(() => {
+        Swal.close();
+        callback();
+    }, 1500);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
     fetch("./facturas.json")
@@ -295,6 +304,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             facturas = data.facturas;
 
-            renderHome();
+            simularCarga(() => renderHome(), "cargando...");
     });
 });

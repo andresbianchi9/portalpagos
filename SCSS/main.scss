@@ -8,7 +8,9 @@ body{
 }
 
 nav{
-    background-color: $color-claro;
+    background-color: $color-suave;
+    width: 100%;
+    text-align: center;
 }
 
 #vista-home{
@@ -99,7 +101,15 @@ h1{
     transform: scale(1.005);
 }
 
-#btnHome, #btnOrdenPago, #btnHistorial, #reiniciar-ordendepago, #realizar-pago{
+#btnHome, #btnOrdenPago, #btnHistorial{
+    border: none;
+    background-color: $color-suave;
+    height: 100%;
+    padding: 15px;
+    cursor: pointer;
+}
+
+#reiniciar-ordendepago, #realizar-pago{
     border-radius: 8px;
     border: solid 1px $color-suave;
     background-color: $color-intenso;
@@ -112,7 +122,15 @@ h1{
     background-color: gray;
 }
 
-#btnHome:hover, #btnOrdenPago:hover, #btnHistorial:hover, #reiniciar-ordendepago:hover, #realizar-pago:hover{
+#btnHome:hover, #btnOrdenPago:hover, #btnHistorial:hover{
+    transform: scale(1.045);
+    background-color: $color-intenso;
+    color: $color-claro;
+    box-shadow: 1px 1px 25px $color-intenso;
+}
+
+
+#reiniciar-ordendepago:hover, #realizar-pago:hover{
     transform: scale(1.045);
 }
 
