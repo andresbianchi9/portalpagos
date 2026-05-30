@@ -29,13 +29,14 @@ h1 {
 }
 
 .container-saldos {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   text-align: center;
-  max-width: 100%;
+  align-items: center;
   justify-content: space-around;
   background-color: #1e4650;
   padding: 2rem;
+  gap: 10px;
   margin: 0;
 }
 
@@ -43,10 +44,6 @@ h1 {
   background-color: #ff7133;
   color: #f4eddb;
   border-radius: 8px;
-  width: 250px;
-  gap: 50px;
-  margin: 5px;
-  padding: 0.5rem;
 }
 
 .saldos:hover {
@@ -109,6 +106,10 @@ h1 {
   cursor: pointer;
 }
 
+#reiniciar-ordendepago {
+  background-color: gray;
+}
+
 #btnHome:hover, #btnOrdenPago:hover, #btnHistorial:hover, #reiniciar-ordendepago:hover, #realizar-pago:hover {
   transform: scale(1.045);
 }
@@ -137,6 +138,35 @@ ul {
 h3, #total-ordendepago {
   color: #1e4650;
   padding-left: 1rem;
+}
+
+.container-banners {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+a {
+  border: none;
+  text-decoration: none;
+}
+
+footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  color: #1e4650;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.logo {
+  width: 266px;
+  height: 65px;
+}
+
+.contacto {
+  text-align: center;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -47,6 +47,10 @@ function renderHome() {
             <p>${formatoMoneda.format(saldos.saldoProximaSemana)}</p>
         </div>
         </div>
+        <div class="container-banners">
+            <img src="./assets/formasdepago.png" alt="Banner métodos de pagos">
+            <img src="./assets/logosformasdepago.jpg" alt="Banner con logos de los medios de pagos">
+        </div>
     `;
 }
 
