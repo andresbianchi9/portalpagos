@@ -30,17 +30,6 @@ h1{
     margin: 0;
 }
 
-// .container-saldos{
-//     display: flex;
-//     flex-direction: row;
-//     text-align: center;
-//     max-width: 100%;
-//     justify-content: space-around;
-//     background-color: $color-intenso;
-//     padding: 2rem;
-//     margin: 0;
-// }
-
 .container-saldos{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -65,7 +54,6 @@ h1{
     transform: scale(1.045);
     border: solid 2px $color-suave;
 }
-
 
 #vista-ordendepago{
     padding: 1rem;
@@ -108,7 +96,7 @@ h1{
     font-weight: bolder;
     background-color: $color-alterno;
     color: $color-claro;
-    transform: scale(1.045);
+    transform: scale(1.005);
 }
 
 #btnHome, #btnOrdenPago, #btnHistorial, #reiniciar-ordendepago, #realizar-pago{
@@ -170,6 +158,7 @@ footer{
     align-items: center;
     padding: 2rem;
     gap: 1rem;
+    font-size: 11px;
 }
 
 .logo{

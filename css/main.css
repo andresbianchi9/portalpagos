@@ -94,7 +94,7 @@ h1 {
   font-weight: bolder;
   background-color: #ff7133;
   color: #f4eddb;
-  transform: scale(1.045);
+  transform: scale(1.005);
 }
 
 #btnHome, #btnOrdenPago, #btnHistorial, #reiniciar-ordendepago, #realizar-pago {
@@ -158,6 +158,7 @@ footer {
   align-items: center;
   padding: 2rem;
   gap: 1rem;
+  font-size: 11px;
 }
 
 .logo {

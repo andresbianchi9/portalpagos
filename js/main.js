@@ -154,31 +154,36 @@ function reiniciarOP(facturas) {
 
     if (checksSeleccionados.length > 0) {
 
-        const confirmar = confirm(
-            "Esta acción desmarcará todas las facturas seleccionadas. ¿Confirmar reinicio de la OP?"
-        );
+        Swal.fire({
+            title: "Confirme para avanzar:",
+            text: "Esta acción desmarcará todas las facturas seleccionadas. ¿Confirmar reinicio de la OP?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, continuar."
+            }).then((result) => {
+            if (result.isConfirmed) {
+                checksSeleccionados.forEach(check => {
 
-        if (confirmar) {
+                    check.checked = false;
+                });
 
-            checksSeleccionados.forEach(check => {
-
-                check.checked = false;
-
-            });
-
-            renderizarTotalOP(facturas);
-
-            alert("La Orden de Pago se reinició correctamente");
-
-        } else {
-
-            alert("Ok, continuamos con la selección actual");
-
-        }
-
+                    renderizarTotalOP(facturas);
+            
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "La Orden de Pago se reinició correctamented",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+        });
+        
     } else {
 
-        alert("No hay facturas seleccionadas aún");
+        Swal.fire("No hay facturas seleccionadas aún");
 
     };
 };
